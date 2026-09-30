@@ -1,0 +1,19 @@
+{
+  "name": "ImportBatch",
+  "type": "object",
+  "description": "Audit trail for each import run (QuickBooks sync or CSV upload).",
+  "properties": {
+    "source": { "type": "string", "enum": ["quickbooks", "csv", "manual"] },
+    "record_type": { "type": "string" },
+    "connection_id": { "type": "string" },
+    "file_name": { "type": "string" },
+    "status": { "type": "string", "enum": ["running", "completed", "failed"] },
+    "created_count": { "type": "number" },
+    "updated_count": { "type": "number" },
+    "skipped_count": { "type": "number" },
+    "error": { "type": "string" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["source", "status"]
+}

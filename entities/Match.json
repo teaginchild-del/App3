@@ -1,0 +1,21 @@
+{
+  "name": "Match",
+  "type": "object",
+  "description": "A link between one or more source records and one or more target records.",
+  "properties": {
+    "rule_id": { "type": "string" },
+    "source_type": { "type": "string" },
+    "target_type": { "type": "string" },
+    "source_ids": { "type": "array", "items": { "type": "string" }, "description": "LedgerRecord ids on the left" },
+    "target_ids": { "type": "array", "items": { "type": "string" }, "description": "LedgerRecord ids on the right" },
+    "score": { "type": "number" },
+    "breakdown": { "type": "object", "description": "Per-criterion scores" },
+    "amount_difference": { "type": "number" },
+    "status": { "type": "string", "enum": ["suggested", "confirmed", "rejected"], "default": "suggested" },
+    "method": { "type": "string", "enum": ["auto", "manual", "quickbooks_link"] },
+    "confirmed_by": { "type": "string" },
+    "confirmed_at": { "type": "string", "format": "date-time" },
+    "note": { "type": "string" }
+  },
+  "required": ["source_ids", "target_ids", "status"]
+}

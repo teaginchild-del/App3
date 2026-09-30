@@ -1,0 +1,14 @@
+{
+  "name": "ImportTemplate",
+  "type": "object",
+  "description": "Saved CSV column mapping so recurring files (bank statements, sales order exports) import in one click.",
+  "properties": {
+    "name": { "type": "string" },
+    "record_type": { "type": "string" },
+    "column_map": { "type": "object", "description": "{ normalized_field: csv_column }" },
+    "date_format": { "type": "string", "enum": ["auto", "MDY", "DMY", "YMD"], "default": "auto" },
+    "group_by_reference": { "type": "boolean", "default": false, "description": "One row per line item; rows sharing a reference become one record" },
+    "negate_amounts": { "type": "boolean", "default": false }
+  },
+  "required": ["name", "record_type", "column_map"]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "QuickBooksToken",
+  "type": "object",
+  "description": "OAuth tokens for a QuickBooksConnection. Only backend functions (service role) read or write this. Restrict all user access to this entity in Base44 security settings.",
+  "properties": {
+    "connection_id": { "type": "string" },
+    "realm_id": { "type": "string" },
+    "access_token": { "type": "string" },
+    "refresh_token": { "type": "string" },
+    "access_token_expires_at": { "type": "string", "format": "date-time" },
+    "refresh_token_expires_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["connection_id", "realm_id", "refresh_token"]
+}

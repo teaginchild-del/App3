@@ -1,0 +1,13 @@
+{
+  "name": "RecordType",
+  "type": "object",
+  "description": "User-defined record types for objects QuickBooks does not have natively. Built-in types live in src/lib/recordTypes.js.",
+  "properties": {
+    "key": { "type": "string", "description": "Machine key, snake_case, unique" },
+    "label": { "type": "string" },
+    "description": { "type": "string" },
+    "category": { "type": "string", "enum": ["sales", "purchasing", "payments", "banking", "items", "contacts", "other"] },
+    "has_lines": { "type": "boolean", "default": false }
+  },
+  "required": ["key", "label"]
+}

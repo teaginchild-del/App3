@@ -1,0 +1,57 @@
+{
+  "name": "LedgerRecord",
+  "type": "object",
+  "description": "One normalized financial object, whether pulled from QuickBooks (invoice, payment, deposit, item...) or imported from outside QuickBooks (sales order, bank deposit, customer deposit, custom type).",
+  "properties": {
+    "record_type": { "type": "string", "description": "Key of the record type, e.g. qbo_invoice, sales_order, bank_deposit, or a custom RecordType key" },
+    "source": { "type": "string", "enum": ["quickbooks", "csv", "manual"], "description": "Where the record came from" },
+    "connection_id": { "type": "string", "description": "QuickBooksConnection id for QuickBooks records" },
+    "import_batch_id": { "type": "string", "description": "ImportBatch that created or last updated this record" },
+    "external_id": { "type": "string", "description": "Id in the source system (QuickBooks Id, CSV reference or row hash). Unique per source + record_type." },
+    "version": { "type": "string", "description": "Source version marker (QuickBooks SyncToken) used to skip unchanged rows" },
+    "reference": { "type": "string", "description": "Document number / check number / SKU" },
+    "name": { "type": "string", "description": "Display name for master data (items, customers, vendors)" },
+    "date": { "type": "string", "format": "date", "description": "Transaction date (YYYY-MM-DD)" },
+    "due_date": { "type": "string", "format": "date" },
+    "amount": { "type": "number", "description": "Total amount in document currency" },
+    "balance": { "type": "number", "description": "Open balance, when the source provides it" },
+    "currency": { "type": "string" },
+    "counterparty": { "type": "string", "description": "Customer / vendor / payee name" },
+    "counterparty_id": { "type": "string" },
+    "account": { "type": "string", "description": "Bank or GL account (deposit-to account, bank account on a statement line)" },
+    "memo": { "type": "string" },
+    "status": { "type": "string" },
+    "lines": {
+      "type": "array",
+      "description": "Line items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_ref": { "type": "string" },
+          "item_name": { "type": "string" },
+          "sku": { "type": "string" },
+          "description": { "type": "string" },
+          "quantity": { "type": "number" },
+          "unit_price": { "type": "number" },
+          "amount": { "type": "number" },
+          "linked": { "type": "array", "items": { "type": "object" } }
+        }
+      }
+    },
+    "linked": {
+      "type": "array",
+      "description": "Links the source system already knows about, e.g. QuickBooks LinkedTxn: [{ record_type, external_id }]",
+      "items": {
+        "type": "object",
+        "properties": {
+          "record_type": { "type": "string" },
+          "external_id": { "type": "string" }
+        }
+      }
+    },
+    "match_status": { "type": "string", "enum": ["unmatched", "suggested", "matched"], "default": "unmatched" },
+    "extra": { "type": "object", "description": "Unmapped columns / type-specific fields" },
+    "raw": { "type": "object", "description": "Original payload from the source" }
+  },
+  "required": ["record_type", "source"]
+}

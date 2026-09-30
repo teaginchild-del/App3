@@ -1,0 +1,22 @@
+{
+  "name": "MatchRule",
+  "type": "object",
+  "description": "How to pair records of one type with records of another type.",
+  "properties": {
+    "name": { "type": "string" },
+    "source_type": { "type": "string", "description": "Record type being matched (left side)" },
+    "target_type": { "type": "string", "description": "Record type it is matched to (right side)" },
+    "mode": { "type": "string", "enum": ["one_to_one", "one_to_many"], "default": "one_to_one", "description": "one_to_many lets a single source match several targets whose amounts add up (e.g. a bank deposit = several payments)" },
+    "max_group_size": { "type": "number", "default": 6 },
+    "same_counterparty_for_groups": { "type": "boolean", "default": false },
+    "skip_targets_linked_from": { "type": "string", "description": "Ignore targets that a record of this type already links to (e.g. qbo_deposit: skip payments QuickBooks has already deposited)" },
+    "min_score": { "type": "number", "default": 0.6, "description": "Suggestions below this score are dropped" },
+    "auto_confirm_score": { "type": "number", "default": 0, "description": "Suggestions at or above this score are confirmed automatically (0 = never)" },
+    "criteria": {
+      "type": "object",
+      "description": "Per-criterion settings: { amount: {weight, required, tolerance_abs, tolerance_pct}, date: {weight, required, window_days}, reference: {weight, required}, counterparty: {weight}, name: {weight}, lines: {weight} }"
+    },
+    "active": { "type": "boolean", "default": true }
+  },
+  "required": ["name", "source_type", "target_type"]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "QuickBooksConnection",
+  "type": "object",
+  "description": "A connected QuickBooks Online company. Holds no secrets - tokens live in QuickBooksToken.",
+  "properties": {
+    "realm_id": { "type": "string" },
+    "company_name": { "type": "string" },
+    "environment": { "type": "string", "enum": ["sandbox", "production"] },
+    "status": { "type": "string", "enum": ["connected", "needs_reauth", "disconnected"] },
+    "connected_at": { "type": "string", "format": "date-time" },
+    "last_sync_at": { "type": "string", "format": "date-time" },
+    "last_sync_summary": { "type": "object" }
+  },
+  "required": ["realm_id", "status"]
+}
